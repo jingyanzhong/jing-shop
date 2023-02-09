@@ -2,16 +2,30 @@
     <div class="productsMenu">
         <div class="container">
             <ul>
-                <li><a href="#">全部</a></li>
-                <li><a href="#">上衣</a></li>
-                <li><a href="#">褲/裙</a></li>
-                <li><a href="#">洋裝/套裝</a></li>
-                <li><a href="#">外套</a></li>
+                <li><a href="#" @click.prevent="categoryFilter('全部')">全部</a></li>
+                <li><a href="#" @click.prevent="categoryFilter('上衣')">上衣</a></li>
+                <li><a href="#" @click.prevent="categoryFilter('下著')">褲/裙</a></li>
+                <li><a href="#" @click.prevent="categoryFilter('洋裝')">洋裝/套裝</a></li>
+                <li><a href="#" @click.prevent="categoryFilter('外套')">外套</a></li>
             </ul>
         </div>
     </div>
 </template>
-
+<script>
+export default {
+  data () {
+    return {
+      category: '全部'
+    }
+  },
+  methods: {
+    categoryFilter (category) {
+      this.category = category
+      this.$emit('category-filter', this.category)
+    }
+  }
+}
+</script>
 <style lang="scss">
 .productsMenu {
     background: #4A593D;

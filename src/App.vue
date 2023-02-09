@@ -1,34 +1,38 @@
 <template>
-  <nav>
-    <div class="container">
-      <h1>
-        <router-link to="/" class="logo"> 京式會社 </router-link>
-        <span>日本服飾、雜貨代購</span>
-      </h1>
-      <div class="nav-link">
-        <router-link to="/products">所有商品</router-link>
-        <router-link to="/products">購買須知</router-link>
-        <router-link to="/products">登入</router-link>
-        <router-link to="/products">購物車</router-link>
+  <div class="main">
+    <nav>
+      <div class="container">
+        <h1>
+          <router-link to="/" class="logo"> 京式會社 </router-link>
+          <span>日本服飾、雜貨代購</span>
+        </h1>
+        <div class="nav-link">
+          <router-link to="/products">所有商品</router-link>
+          <router-link to="/products">購買須知</router-link>
+          <router-link to="/products">登入</router-link>
+          <router-link to="/cart">購物車</router-link>
+        </div>
+        <div class="navList">
+          <a href="#">
+            <i class="bi bi-list"></i>
+          </a>
+        </div>
       </div>
-      <div class="navList">
-        <a href="#">
-          <i class="bi bi-list"></i>
-        </a>
-      </div>
-    </div>
-  </nav>
-  <router-view />
+    </nav>
+    <router-view />
+  </div>
   <footer>
-    <div class="footerLogo">
-      <h2>京式會社</h2>
-      <p>版權所有 Copyright © 2022 All Rights Reserved.</p>
-      <p>僅作為vue3練習，無任何商業用途 | 圖片來源：GRL (https://www.grail.bz/) <br>
-        Just for practise vue3. Non-commercial | images by GRL website</p>
-    </div>
-    <div class="footerInfo">
-      <p>客服信箱 : melody804210@gmail.com</p>
-      <p>客服時間:周一至周五 12:00~18:00</p>
+    <div class="container">
+      <div class="footerLogo">
+        <h2>京式會社</h2>
+        <p>版權所有 Copyright © 2022 All Rights Reserved.</p>
+        <p>僅作為vue3練習，無任何商業用途 | 圖片來源：GRL (https://www.grail.bz/) <br>
+          Just for practise vue3. Non-commercial | images by GRL website</p>
+      </div>
+      <div class="footerInfo">
+        <p>客服信箱 : melody804210@gmail.com</p>
+        <p>客服時間:周一至周五 12:00~18:00</p>
+      </div>
     </div>
   </footer>
 </template>
@@ -36,6 +40,18 @@
 <style lang="scss">
 @import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css');
 @import './assets/all.scss';
+html, body {
+  height: 100%;
+  margin: 0;
+}
+#app {
+  height: 100%;
+  display: flex; /*使物件依序排列*/
+  flex-direction: column; /*使物件垂直排列*/
+}
+.main {
+  flex-grow: 1;
+}
 nav {
   background: rgba(255, 255, 255, 0.8);
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
@@ -115,9 +131,11 @@ nav {
 footer {
   background: #D0D3C9;
   padding: 12px;
-  display: flex;
-  align-items: center;
   line-height: 1.5;
+  .container {
+    display: flex;
+    align-items: center;
+  }
   .footerLogo {
     margin-right: auto;
   }

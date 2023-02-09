@@ -1,8 +1,8 @@
 <template>
-  <Menu></Menu>
+  <Menu @category-filter="categoryFilter"></Menu>
   <div class="productsList">
     <div class="container">
-      <div class="productItem" v-for="item in products" :key="item.id">
+      <div class="productItem" v-for="item in productFilter" :key="item.id">
         <a href="#" @click.prevent="getProduct(item.id)">
           <img :src="item.imgUrl" :alt="item.title">
           <div class="productItemContent">
@@ -30,7 +30,8 @@ export default {
   data () {
     return {
       products: {},
-      pagination: ''
+      pagination: '',
+      category: '全部'
     }
   },
   methods: {
@@ -44,6 +45,18 @@ export default {
     },
     getProduct (id) {
       this.$router.push(`/products/${id}`)
+    },
+    categoryFilter (category) {
+      this.category = category
+    }
+  },
+  computed: {
+    productFilter () {
+      if (this.category === '全部') {
+        return this.products
+      } else {
+        return this.products.filter((item) => item.category === this.category)
+      }
     }
   },
   created () {

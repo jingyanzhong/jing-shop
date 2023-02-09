@@ -14,7 +14,7 @@
                     <span>NTD {{ product.price }}</span>
                     <span>NTD {{ product.origin_price }}</span>
                 </p>
-                <button class="addCart" type="button">加入購物車</button>
+                <button class="addCart" type="button" @click="addToCart">加入購物車</button>
                 <p>
                     詳細介紹 | <br>
                     {{ product.description }}
@@ -36,7 +36,9 @@ export default {
   data () {
     return {
       id: '',
-      product: {}
+      qty: 1,
+      product: {},
+      addCart: {}
     }
   },
   methods: {
@@ -45,6 +47,14 @@ export default {
       this.$http.get(api).then((res) => {
         this.product = res.data.product
         console.log(this.product)
+      })
+    },
+    addToCart () {
+      this.addCart.product_id = this.id
+      this.addCart.qty = this.qty
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
+      this.$http.post(api, { data: this.addCart }).then((res) => {
+        console.log(res)
       })
     }
   },
@@ -89,8 +99,9 @@ export default {
         border: 0;
         padding: 8px;
         transition: all .5s;
+        cursor: pointer;
         &:hover {
-            background: #838A2D;
+            background: #37442c;
         }
     }
     .otherImg {
