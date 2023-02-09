@@ -71,6 +71,11 @@ html, body {
     right: 20px;
     z-index: 20;
     color: #4a593d;
+    transition: all .5s;
+    &:hover {
+      background: #4a593d;
+      color: #fff;
+    }
   }
 }
 .main {
@@ -157,6 +162,7 @@ footer {
   color: #4a593d;
   padding: 12px;
   line-height: 1.5;
+  margin-top: 60px;
   .container {
     display: flex;
     align-items: center;

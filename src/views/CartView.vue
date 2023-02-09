@@ -139,6 +139,7 @@ export default {
     }
     .cartInformation {
         width: 35%;
+        height: 100%;
         background: #D0D3C9;
         display: flex;
         flex-direction: column;
