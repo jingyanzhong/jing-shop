@@ -1,4 +1,5 @@
 <template>
+  <div class="goTop"><a href="#" @click.prevent="goTop">TOP</a></div>
   <div class="main">
     <nav>
       <div class="container">
@@ -36,7 +37,15 @@
     </div>
   </footer>
 </template>
-
+<script>
+export default {
+  methods: {
+    goTop () {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }
+}
+</script>
 <style lang="scss">
 @import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css');
 @import './assets/all.scss';
@@ -48,6 +57,21 @@ html, body {
   height: 100%;
   display: flex; /*使物件依序排列*/
   flex-direction: column; /*使物件垂直排列*/
+}
+.goTop {
+  a {
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    line-height: 60px;
+    border-radius: 30px;
+    border: 2px solid #4a593d;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 20;
+    color: #4a593d;
+  }
 }
 .main {
   flex-grow: 1;
@@ -130,6 +154,7 @@ nav {
 }
 footer {
   background: #D0D3C9;
+  color: #4a593d;
   padding: 12px;
   line-height: 1.5;
   .container {
@@ -176,10 +201,11 @@ footer {
   footer {
   background: #D0D3C9;
   padding: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
   font-size: 13px;
+  .container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
   .footerLogo {
     margin-right: 0;
   }

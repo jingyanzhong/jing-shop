@@ -110,4 +110,24 @@ export default {
         }
     }
 }
+
+@media screen and (max-width: 576px) {
+    .product {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    .productMain {
+        flex-direction: column-reverse;
+        padding: 16px;
+    }
+    .productImg {
+        width: 100%;
+        margin-right: 0;
+    }
+    .productInfo {
+        width: 100%;
+        line-height: 1.5;
+        position: static;
+    }
+  }
+}
 </style>
