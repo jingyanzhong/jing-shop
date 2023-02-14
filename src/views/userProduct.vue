@@ -14,7 +14,7 @@
                     <span>NTD {{ product.price }}</span>
                     <span>NTD {{ product.origin_price }}</span>
                 </p>
-                <button class="addCart" type="button" @click="addToCart">加入購物車</button>
+                <button class="addCart" type="button" @click="addToCart" :class="{ 'disabled' : loading }">加入購物車</button>
                 <p>
                     詳細介紹 | <br>
                     {{ product.description }}
@@ -38,7 +38,8 @@ export default {
       id: '',
       qty: 1,
       product: {},
-      addCart: {}
+      addCart: {},
+      loading: false
     }
   },
   methods: {
@@ -52,8 +53,10 @@ export default {
     addToCart () {
       this.addCart.product_id = this.id
       this.addCart.qty = this.qty
+      this.loading = true
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
       this.$http.post(api, { data: this.addCart }).then((res) => {
+        this.loading = false
         console.log(res)
       })
     }

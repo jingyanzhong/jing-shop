@@ -20,27 +20,31 @@
       </div>
     </div>
   </div>
+  <Pagination
+  :page="pagination"
+  @get-products="getProducts"></Pagination>
 </template>
 <script>
 import Menu from '@/components/productsMenu.vue'
+import Pagination from '@/components/PaginationComponent.vue'
 export default {
   components: {
-    Menu
+    Menu, Pagination
   },
   data () {
     return {
       products: {},
-      pagination: '',
+      pagination: {},
       category: '全部'
     }
   },
   methods: {
-    getProducts () {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products`
+    getProducts (page = 1) {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products?page=${page}`
       this.$http.get(api).then((res) => {
         this.products = res.data.products
         this.pagination = res.data.pagination
-        console.log(this.products)
+        console.log(this.pagination)
       })
     },
     getProduct (id) {
@@ -48,6 +52,15 @@ export default {
     },
     categoryFilter (category) {
       this.category = category
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`
+      if (category !== '全部') {
+        this.$http.get(api).then((res) => {
+          this.products = res.data.products
+          this.pagination = {}
+        })
+      } else {
+        this.getProducts()
+      }
     }
   },
   computed: {

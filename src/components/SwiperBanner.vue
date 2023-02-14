@@ -2,7 +2,7 @@
   <div class="swiper bannerSwiper">
     <div class="swiper-wrapper">
         <div class="swiper-slide page1">
-          <img src="../../img/banner.jpg" alt="開幕優惠活動">
+          <img src="../../img/banner01.jpg" alt="開幕優惠活動">
         </div>
         <div class="swiper-slide page2">page 2</div>
         <div class="swiper-slide page3">page 3</div>
