@@ -5,31 +5,42 @@
         <div class="cartContent">
             <div class="cartList">
                 <a href="#" @click.prevent="deleteAllCarts">刪除全部購物車</a>
+                <p v-if="carts.total === 0">暫時無購物清單，請至商城選購</p>
                 <ul class="cartItem">
-                    <li v-for="item in carts" :key="item.id">
+                    <li v-for="item in carts.carts" :key="item.id">
                         <div class="cartItemImg">
                             <img :src="item.product.imgUrl" :alt="item.product.title">
                         </div>
                         <div class="cartItemContent">
                             <p class="title">{{ item.product.title }}</p>
-                            <p>數量 {{ item.qty }}</p>
+                            <input type="number" min="1" @change="updateCarts(item)" v-model.number="item.qty">
                             <p>NTD {{ item.total }}</p>
                         </div>
-                        <button type="button" class="delBtn" @click="deleteCart">刪除</button>
+                        <button type="button" class="delBtn" @click="deleteCart(item)">刪除</button>
                     </li>
                 </ul>
             </div>
             <div class="cartInformation">
                 <h4>訂單摘要</h4>
                 <div class="cartInformationContent">
-                    <p>商品總計</p>
-                    <p>運費總計</p>
-                    <p>優惠券折扣</p>
+                    <p>商品總計 <span>NTD {{ carts.total }}元</span></p>
+                    <p>運送方式
+                        <span>
+                            <select v-model="transport">
+                                <option value="" selected="selected" disabled>請選擇運送方式</option>
+                                <option value="711">7-11取貨付款</option>
+                                <option value="blackCat">宅配</option>
+                            </select>
+                        </span>
+                    </p>
+                    <p class="couponList">使用優惠券
+                        <span>
+                            <input type="text" placeholder="輸入折扣碼" v-model="coupon">
+                            <button type="button" @click="useCoupon">使用</button>
+                        </span>
+                    </p>
                     <br>
-                    <p>運送方式</p>
-                    <p>使用優惠券</p>
-                    <br>
-                    <p>結帳總金額</p>
+                    <p>結帳總金額 <span>NTD {{ Math.ceil(carts.final_total) }}元</span></p>
                 </div>
                 <button type="button" class="cartNextBtn">前往結帳</button>
             </div>
@@ -41,26 +52,58 @@
 export default {
   data () {
     return {
-      carts: {}
+      carts: {},
+      total: 0,
+      coupon: '',
+      final_total: 0,
+      transport: ''
     }
   },
   methods: {
     getCarts () {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
       this.$http.get(api).then((res) => {
-        this.carts = res.data.data.carts
+        this.carts = res.data.data
         console.log(this.carts)
       })
     },
     deleteAllCarts () {
       console.log('刪除全部')
     },
-    deleteCart () {
-      console.log('刪除單一商品')
+    deleteCart (item) {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.id}`
+      this.$http.delete(api).then((res) => {
+        console.log(res)
+        this.getCarts()
+      })
+    //   console.log('刪除單一商品')
+    },
+    updateCarts (item) {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.id}`
+      const cart = {
+        product_id: item.product.id,
+        qty: item.qty
+      }
+      this.$http.put(api, { data: cart }).then((res) => {
+        this.carts = res.data.data
+        this.getCarts()
+      })
+    },
+    useCoupon () {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/coupon`
+      const coupon = {
+        code: this.coupon
+      }
+      this.$http.post(api, { data: coupon }).then((res) => {
+        console.log(res)
+        this.coupon = ''
+        this.getCarts()
+      })
     }
   },
   created () {
     this.getCarts()
+    // this.cartTotal()
   }
 }
 </script>
@@ -156,6 +199,44 @@ export default {
             line-height: 1.5;
             color: #4A593D;
             margin-bottom: auto;
+            .couponList {
+                span {
+                    display: flex;
+                    align-items: center;
+                }
+            }
+            p {
+                display: flex;
+                align-items: center;
+                margin-bottom: 8px;
+                span {
+                    margin-left: auto;
+                }
+            }
+            input, select {
+                height: 30px;
+                line-height: 30px;
+                font-size: 14px;
+                padding: 4px;
+                border: 1px solid #4a593d;
+            }
+            button {
+                height: 30px;
+                font-size: 16px;
+                padding: 4px 8px;
+                border: 1px solid #4a593d;
+                background: #4a593d;
+                color: #fff;
+                cursor: pointer;
+                transition: all .5s;
+                &:hover {
+                    background: #37442c;
+                }
+            }
+            .useCoupon {
+                color: #e90e0e;
+                text-align: end;
+            }
         }
         .cartNextBtn {
             font-size: 24px;
