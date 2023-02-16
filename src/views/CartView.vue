@@ -42,7 +42,8 @@
                     <br>
                     <p>結帳總金額 <span>NTD {{ Math.ceil(carts.final_total) }}元</span></p>
                 </div>
-                <button type="button" class="cartNextBtn">前往結帳</button>
+                <router-link to="/checkOut" class="cartNextBtn">前往結帳</router-link>
+                <!-- <button type="button" class="cartNextBtn">前往結帳</button> -->
             </div>
         </div>
     </div>
@@ -241,6 +242,7 @@ export default {
         .cartNextBtn {
             font-size: 24px;
             font-weight: bold;
+            text-align: center;
             background: #4A593D;
             color: #fff;
             border: 0;

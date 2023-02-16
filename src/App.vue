@@ -20,6 +20,7 @@
         </div>
       </div>
     </nav>
+    <ToastMessage></ToastMessage>
     <router-view />
   </div>
   <footer>
@@ -38,7 +39,18 @@
   </footer>
 </template>
 <script>
+import emitter from '@/methods/emitter'
+import ToastMessage from '@/components/ToastMessages.vue'
+
 export default {
+  provide () {
+    return {
+      emitter
+    }
+  },
+  components: {
+    ToastMessage
+  },
   methods: {
     goTop () {
       window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -72,6 +84,7 @@ html, body {
     z-index: 20;
     color: #4a593d;
     transition: all .5s;
+    background: rgba(255,255,255,.5);
     &:hover {
       background: #4a593d;
       color: #fff;
@@ -80,6 +93,7 @@ html, body {
 }
 .main {
   flex-grow: 1;
+  position: relative;
 }
 nav {
   background: rgba(255, 255, 255, 0.8);

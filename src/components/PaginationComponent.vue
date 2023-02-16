@@ -1,5 +1,5 @@
 <template>
-  <!-- <nav class="Page navigation">
+  <nav class="Page navigation">
     <ul class="pagination justify-content-center">
       <li class="page-item" :class="{ disabled: !hasPre }">
         <a
@@ -32,8 +32,8 @@
         </a>
       </li>
     </ul>
-  </nav> -->
-  <nav class="pagination" v-if="totalPage">
+  </nav>
+  <!-- <nav class="pagination" v-if="totalPage">
     <ul>
       <li class="page-item" :class="{ disabled: !hasPre }">
         <a
@@ -63,7 +63,7 @@
         </a>
       </li>
     </ul>
-  </nav>
+  </nav> -->
 </template>
 
 <script>
@@ -124,33 +124,36 @@ export default {
 </script>
 
 <style lang="scss">
-.pagination {
-  display: flex;
-  justify-content: center;
+.navigation {
   box-shadow: none;
-  ul {
-    display: flex;
-  }
-  .page-item{
-    width: 40px;
-    height: 40px;
-    font-size: 20px;
-    background: #4A593D;
-    border-radius: 20px;
-    transition: all .5s;
-    margin: 0 6px;
-    &:hover, &.active {
-      background: #344227;
-    }
-    a {
-      color: #fff;
-      text-align: center;
-      line-height: 40px;
-    }
-  }
 }
-.page-item.disabled {
-  pointer-events:none;
-  background: #7a7a7a;
-}
+// .pagination {
+  // display: flex;
+  // justify-content: center;
+  // box-shadow: none;
+//   ul {
+//     display: flex;
+//   }
+//   .page-item{
+//     width: 40px;
+//     height: 40px;
+//     font-size: 20px;
+//     background: #4A593D;
+//     border-radius: 20px;
+//     transition: all .5s;
+//     margin: 0 6px;
+//     &:hover, &.active {
+//       background: #344227;
+//     }
+//     a {
+//       color: #fff;
+//       text-align: center;
+//       line-height: 40px;
+//     }
+//   }
+// }
+// .page-item.disabled {
+//   pointer-events:none;
+//   background: #7a7a7a;
+// }
 </style>
