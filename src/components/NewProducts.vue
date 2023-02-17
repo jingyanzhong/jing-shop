@@ -69,6 +69,7 @@ export default {
           line-height: 1.5;
           h4 {
             font-size: 18px;
+            color: #4a593d;
           }
           .origin_price {
             font-size: 1px;

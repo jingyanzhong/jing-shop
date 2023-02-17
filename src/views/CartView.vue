@@ -13,8 +13,21 @@
                         </div>
                         <div class="cartItemContent">
                             <p class="title">{{ item.product.title }}</p>
-                            <input type="number" min="1" @change="updateCarts(item)" v-model.number="item.qty">
-                            <p>NTD {{ item.total }}</p>
+                            <p class="size">F / {{ item.color }}</p>
+                            <select class="num" @change="updateCarts(item)" v-model.number="item.qty">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                            <p class="price" :class="{ 'line-through' : item.coupon }">售價NTD {{ currency(item.total) }}</p>
+                            <p class="sale_price" v-if="item.coupon">折扣價<span>NTD {{ currency(Math.ceil(item.final_total)) }}</span></p>
                         </div>
                         <button type="button" class="delBtn" @click="deleteCart(item)">刪除</button>
                     </li>
@@ -23,7 +36,7 @@
             <div class="cartInformation">
                 <h4>訂單摘要</h4>
                 <div class="cartInformationContent">
-                    <p>商品總計 <span>NTD {{ carts.total }}元</span></p>
+                    <p>商品總計 <span>NTD {{ currency(carts.total) }}元</span></p>
                     <p>運送方式
                         <span>
                             <select v-model="transport">
@@ -39,8 +52,9 @@
                             <button type="button" @click="useCoupon">使用</button>
                         </span>
                     </p>
+                    <p class="couponMsg" v-if="couponMsg.message">{{ couponMsg.message }}</p>
                     <br>
-                    <p>結帳總金額 <span>NTD {{ Math.ceil(carts.final_total) }}元</span></p>
+                    <p>結帳總金額 <span>NTD {{ currency(Math.ceil(carts.final_total)) }}元</span></p>
                 </div>
                 <router-link to="/checkOut" class="cartNextBtn">前往結帳</router-link>
                 <!-- <button type="button" class="cartNextBtn">前往結帳</button> -->
@@ -50,17 +64,20 @@
 </div>
 </template>
 <script>
+import { currency } from '@/methods/filters'
 export default {
   data () {
     return {
       carts: {},
       total: 0,
       coupon: '',
+      couponMsg: '',
       final_total: 0,
       transport: ''
     }
   },
   methods: {
+    currency,
     getCarts () {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
       this.$http.get(api).then((res) => {
@@ -97,6 +114,7 @@ export default {
       }
       this.$http.post(api, { data: coupon }).then((res) => {
         console.log(res)
+        this.couponMsg = res.data
         this.coupon = ''
         this.getCarts()
       })
@@ -115,7 +133,7 @@ export default {
         max-width: 1200px;
     }
     h3 {
-        font-size: 32px;
+        font-size: 28px;
         font-weight: bold;
         color: #4A593D;
         text-align: center;
@@ -160,12 +178,27 @@ export default {
             }
         }
         .cartItemContent{
+            font-size: 14px;
+            color: #4A593D;
             width: 60%;
             margin-right: auto;
             padding: 20px 20px 20px 0;
-            line-height: 1.5;
+            line-height: 1.8;
             .title {
-                font-size: 20px;
+                font-size: 16px;
+            }
+            .line-through {
+                text-decoration: line-through;
+                color: #adadad;
+            }
+            .sale_price {
+                color: #e90e0e;
+                span {
+                    font-size: 16px;
+                }
+            }
+            .num {
+                margin: 8px 0;
             }
         }
         .delBtn {
@@ -190,7 +223,7 @@ export default {
         h4 {
             background: #4A593D;
             color: #fff;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: bold;
             text-align: center;
             padding: 12px;
@@ -234,13 +267,14 @@ export default {
                     background: #37442c;
                 }
             }
-            .useCoupon {
+            .couponMsg {
+                display: block;
                 color: #e90e0e;
                 text-align: end;
             }
         }
         .cartNextBtn {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: bold;
             text-align: center;
             background: #4A593D;

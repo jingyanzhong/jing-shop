@@ -10,10 +10,10 @@
               {{ item.title }}
             </h3>
             <p class="origin_price">
-              原價 NTD {{ item.origin_price }}
+              原價 NTD {{ currency(item.origin_price) }}
             </p>
             <p class="price">
-              特價 NTD {{ item.price }}
+              特價 NTD {{ currency(item.price) }}
             </p>
           </div>
         </a>
@@ -27,6 +27,7 @@
 <script>
 import Menu from '@/components/productsMenu.vue'
 import Pagination from '@/components/PaginationComponent.vue'
+import { currency } from '@/methods/filters'
 export default {
   components: {
     Menu, Pagination
@@ -39,6 +40,7 @@ export default {
     }
   },
   methods: {
+    currency,
     getProducts (page = 1) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products?page=${page}`
       this.$http.get(api).then((res) => {
