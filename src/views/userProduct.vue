@@ -17,7 +17,7 @@
                 <hr>
                 <p class="size"><span>F</span></p>
                 <p class="color">
-                    <a href="#" :class="{ 'active' : color === item }" @click.prevent="color = item" v-for="item in product.description2" :key="item">{{ (item.split('')).toString() }}</a>
+                    <a href="#" :class="{ 'active' : color === item }" @click.prevent="color = item" v-for="item in product.description2" :key="item">{{ (item.split(' ', 1)).toString() }}</a>
                 </p>
                 <p class="num">
                     <select v-model="qty">

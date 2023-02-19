@@ -52,28 +52,42 @@
                 </table>
             </div>
             <div class="userInformation">
-                <form action="">
+                <VForm>
                     <div class="userName">
-                        <input class="firstName" type="text" placeholder="姓氏" v-model="user.firstName" required>
-                        <input class="lastName" type="text" placeholder="名字" v-model="user.lastName" required>
+                        <VField class="firstName" name="firstName" type="text" placeholder="姓氏" rules="required" />
+                        <VField class="lastName" name="lastName" type="text" placeholder="名字" rules="required" />
+                    </div>
+                    <div class="userNameError">
+                        <ErrorMessage name="firstName" />
+                        <ErrorMessage name="lastName" />
                     </div>
                     <div class="phone">
-                        <input type="tel" placeholder="手機號碼" v-model="user.phone" required>
+                        <VField type="tel" name="phone" placeholder="手機號碼" rules="required|numeric|min:10|max:10" />
+                    </div>
+                    <div class="phoneError">
+                        <ErrorMessage name="phone" />
                     </div>
                     <div class="mail">
-                        <input type="mail" placeholder="E-mail" v-model="user.email" required>
+                        <VField type="mail" name="email" placeholder="E-mail" rules="required|email" />
+                    </div>
+                    <div class="mailError">
+                        <ErrorMessage name="email" />
                     </div>
                     <div class="address">
-                        <input class="addNum" type="text" placeholder="郵遞區號" v-model="user.addressNum" required>
-                        <input type="text" placeholder="地址" v-model="user.address" required>
+                        <VField class="addNum" name="addressNum" type="text" placeholder="郵遞區號" rules="required|numeric|min:3|max:6"  />
+                        <VField type="text" name="address" placeholder="地址" rules="required"  />
                     </div>
-                    <div class="textArea">
+                    <div class="addressError">
+                        <ErrorMessage name="addressNum" />
+                        <ErrorMessage name="address" />
+                    </div>
+                    <!-- <div class="textArea">
                         <textarea name="userText" id="userText" cols="30" rows="3" placeholder="備註..."></textarea>
-                    </div>
-                    <div class="submitBtn">
-                        <input type="submit" value="下一步">
-                    </div>
-                </form>
+                    </div> -->
+                    <!-- <div class="submitBtn">
+                        <VField type="submit" value="下一步"/>
+                    </div> -->
+                </VForm>
             </div>
         </div>
     </div>
@@ -116,30 +130,37 @@ export default {
     .container {
         max-width: 710px;
     }
+
     h3 {
         font-size: 28px;
         font-weight: bold;
         color: #4A593D;
         text-align: center;
         margin: 50px 0;
+
         span {
             font-size: 20px;
             font-weight: normal;
         }
     }
+
     .checkOutLine {
-        .text, .line {
+
+        .text,
+        .line {
             display: flex;
             justify-content: space-between;
             margin-bottom: 16px;
             font-size: 14px;
         }
+
         .line {
             width: 95%;
             height: 3px;
             margin: 0 auto;
             background: #D0D3C9;
             position: relative;
+
             .ball {
                 width: 12px;
                 height: 12px;
@@ -147,52 +168,68 @@ export default {
                 border-radius: 8px;
                 position: absolute;
                 top: -4px;
+
                 &.active {
                     background: #4A593D;
                 }
             }
+
             .ball01 {
                 left: 0;
             }
+
             .ball02 {
                 left: 33.33333%;
             }
+
             .ball03 {
                 left: 66.66666%;
             }
+
             .ball04 {
                 right: 0;
             }
         }
     }
+
     .productList_final {
         margin-top: 24px;
+
         table {
             width: 100%;
             border: 1px solid #D0D3C9;
             color: #4A593D;
             font-size: 14px;
+
             thead {
                 font-weight: bold;
+
                 .title {
                     background: #D0D3C9;
                 }
             }
+
             tfoot {
                 text-align: end;
             }
+
             tr {
                 border-bottom: 1px solid #D0D3C9;
-                th,td {
+
+                th,
+                td {
                     padding: 16px;
+
                     p {
                         line-height: 1.5;
                     }
                 }
+
                 .sale {
                     color: #ce0505;
                     margin-left: 16px;
                 }
+
                 .line_through {
                     color: #9EAA8F;
                     text-decoration: line-through;
@@ -200,28 +237,37 @@ export default {
             }
         }
     }
+
     .userInformation {
         margin-top: 24px;
+
         div {
             display: flex;
-            input, textarea {
+
+            input,
+            textarea {
                 width: 100%;
                 border: 1px solid #D0D3C9;
                 border-radius: 20px;
                 padding: 8px 16px;
                 margin-bottom: 16px;
             }
-            .firstName, .addNum {
+
+            .firstName,
+            .addNum {
                 width: 30%;
                 margin-right: 16px;
             }
+
             textarea {
                 flex: 1;
             }
         }
+
         .submitBtn {
             display: block;
             text-align: center;
+
             input {
                 width: 30%;
                 background: #9EAA8F;
@@ -229,11 +275,11 @@ export default {
                 padding: 8px 16px;
                 border: none;
                 transition: all .5s;
+
                 &:hover {
                     background: #4A593D;
                 }
             }
         }
     }
-}
-</style>
+}</style>
