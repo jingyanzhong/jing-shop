@@ -22,6 +22,12 @@
     </nav>
     <ToastMessage></ToastMessage>
     <router-view />
+    <div class="bg-ball-b">
+      <div class="ball01"></div>
+    </div>
+    <div class="bg-ball-s">
+      <div class="ball02"></div>
+    </div>
   </div>
   <footer>
     <div class="container">
@@ -89,6 +95,34 @@ html, body {
       background: #4a593d;
       color: #fff;
     }
+  }
+}
+.bg-ball-b {
+  position: fixed;
+  top: 200px;
+  right: 0;
+  width: 100px;
+  height: 200px;
+  overflow: hidden;
+  z-index: -10;
+  .ball01 {
+    width: 200px;
+    height: 200px;
+    background: #D0D3C9;
+    border-radius: 100px;
+    background-size: cover;
+  }
+}
+.bg-ball-s {
+  position: fixed;
+  top: 400px;
+  right: 78px;
+  z-index: -10;
+  .ball02 {
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    background: #4a593d;
   }
 }
 .main {
@@ -232,5 +266,3 @@ footer {
 }
 }
 </style>
-
-<script></script>
