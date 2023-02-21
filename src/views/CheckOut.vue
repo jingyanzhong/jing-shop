@@ -51,42 +51,45 @@
                     </tfoot>
                 </table>
             </div>
-            <div class="userInformation">
-                <VForm>
+            <div class="userForm">
+                <VForm v-slot="{ meta, errors }" @submit="formSubmit">
                     <div class="userName">
-                        <VField class="firstName" name="firstName" type="text" placeholder="姓氏" rules="required" />
-                        <VField class="lastName" name="lastName" type="text" placeholder="名字" rules="required" />
+                        <VField class="firstName" name="firstName"  label="姓氏" type="text" placeholder="姓氏" rules="required" :class="{ 'is-invalid': errors['firstName'] }" />
+                        <VField class="lastName" name="lastName"  label="名字" type="text" placeholder="名字" rules="required" />
                     </div>
-                    <div class="userNameError">
+                    <div class="error userNameError">
                         <ErrorMessage name="firstName" />
-                        <ErrorMessage name="lastName" />
+                        <ErrorMessage name="lastName" class="lastNameError" />
                     </div>
                     <div class="phone">
-                        <VField type="tel" name="phone" placeholder="手機號碼" rules="required|numeric|min:10|max:10" />
+                        <VField type="tel" name="tel" label="手機號碼" placeholder="手機號碼" rules="required|numeric|min:10|max:10" />
                     </div>
-                    <div class="phoneError">
-                        <ErrorMessage name="phone" />
+                    <div class="error phoneError">
+                        <ErrorMessage name="tel" />
                     </div>
                     <div class="mail">
                         <VField type="mail" name="email" placeholder="E-mail" rules="required|email" />
                     </div>
-                    <div class="mailError">
+                    <div class="error mailError">
                         <ErrorMessage name="email" />
                     </div>
                     <div class="address">
-                        <VField class="addNum" name="addressNum" type="text" placeholder="郵遞區號" rules="required|numeric|min:3|max:6"  />
-                        <VField type="text" name="address" placeholder="地址" rules="required"  />
+                        <VField class="addNum" name="addressNum"  label="郵遞區號" type="text" placeholder="郵遞區號" rules="required|numeric|min:3|max:6"  />
+                        <VField type="text" name="address"  label="地址" placeholder="地址" rules="required"  />
                     </div>
-                    <div class="addressError">
+                    <div class="error addressError">
                         <ErrorMessage name="addressNum" />
-                        <ErrorMessage name="address" />
+                        <ErrorMessage name="address" class="addressError" />
                     </div>
-                    <!-- <div class="textArea">
-                        <textarea name="userText" id="userText" cols="30" rows="3" placeholder="備註..."></textarea>
-                    </div> -->
-                    <!-- <div class="submitBtn">
-                        <VField type="submit" value="下一步"/>
-                    </div> -->
+                    <div class="textArea">
+                    <VField name="message" v-slot="{ field }">
+                        <textarea v-bind="field" cols="30" rows="10" placeholder="備註..."></textarea>
+                    </VField>
+                    </div>
+                    <div class="formBtn">
+                        <button class="resetBtn" type="reset">重填</button>
+                        <button class="submitBtn" :class="{'disabled' : !meta.valid}" :disabled="!meta.valid">下一步</button>
+                    </div>
                 </VForm>
             </div>
         </div>
@@ -99,13 +102,14 @@ export default {
   data () {
     return {
       carts: {},
-      user: {
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        address: '',
-        addressNum: ''
+      form: {
+        user: {
+          name: '',
+          email: '',
+          tel: '',
+          address: ''
+        },
+        message: ''
       }
     }
   },
@@ -116,6 +120,26 @@ export default {
       this.$http.get(api).then((res) => {
         this.carts = res.data.data
         console.log(this.carts)
+      })
+    },
+    formSubmit (val) {
+      this.form.user.name = val.firstName + val.lastName
+      this.form.user.email = val.email
+      this.form.user.tel = val.tel
+      this.form.user.address = val.addressNum + val.address
+      this.form.msg = val.message
+      // this.user = val;
+      console.log('user', this.form.user)
+      console.log('msg', this.form.msg)
+      const order = this.form
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/order`
+      this.$http.post(api, { data: order }).then((res) => {
+        console.log(res)
+        if (res.data.success) {
+          this.$router.push(`/checkOut/${res.data.orderId}`)
+        } else {
+          alert(res.data.message)
+        }
       })
     }
   },
@@ -158,9 +182,23 @@ export default {
             width: 95%;
             height: 3px;
             margin: 0 auto;
-            background: #D0D3C9;
             position: relative;
-
+            &::before{
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 3px;
+                width: 100%;
+                background: #D0D3C9;
+            }
+            &::after{
+                content: '';
+                width: 0%;
+                height: 3px;
+                background: #4A593D;
+                z-index: 3;
+            }
             .ball {
                 width: 12px;
                 height: 12px;
@@ -238,12 +276,10 @@ export default {
         }
     }
 
-    .userInformation {
+    .userForm {
         margin-top: 24px;
-
         div {
             display: flex;
-
             input,
             textarea {
                 width: 100%;
@@ -252,34 +288,55 @@ export default {
                 padding: 8px 16px;
                 margin-bottom: 16px;
             }
-
             .firstName,
             .addNum {
                 width: 30%;
                 margin-right: 16px;
             }
-
             textarea {
                 flex: 1;
             }
         }
-
-        .submitBtn {
+        .error {
+            color: #ce0505;
+            margin-bottom: 16px;
+                span:nth-child(1) {
+                width: 25%;
+                }
+        }
+        .formBtn {
             display: block;
             text-align: center;
-
-            input {
+            button, a {
+                display: inline-block;
                 width: 30%;
-                background: #9EAA8F;
                 color: #fff;
                 padding: 8px 16px;
                 border: none;
+                cursor: pointer;
                 transition: all .5s;
-
+            }
+            .resetBtn {
+                background: #858585;
+                margin-right: 16px;
+                &:hover {
+                    background: #585858;
+                }
+            }
+            .submitBtn {
+                background: #9EAA8F;
                 &:hover {
                     background: #4A593D;
                 }
             }
+            .disabled {
+                cursor: not-allowed;
+                background: #555555;
+                &:hover {
+                    background: #555555;
+                }
+            }
         }
     }
-}</style>
+}
+</style>
