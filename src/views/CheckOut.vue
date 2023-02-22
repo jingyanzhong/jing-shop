@@ -160,13 +160,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.mobileShow {
-    display: none;
-}
-.mobileNone {
-    display: block;
-}
+<style lang="scss" scoped>
 .checkOut {
     .container {
         max-width: 710px;
@@ -318,9 +312,11 @@ export default {
         .error {
             color: #ce0505;
             margin-bottom: 16px;
-                span:nth-child(1) {
-                width: 25%;
-                }
+        }
+        .addressError, .userNameError {
+            span:nth-child(1) {
+            width: 25%;
+            }
         }
         .formBtn {
             display: block;
@@ -358,11 +354,15 @@ export default {
     }
 }
 @media screen and (max-width: 576px) {
-    .mobileShow {
-        display: block;
-    }
-    .mobileNone {
-        display: none;
+    .checkOut {
+        .userForm {
+            .addressError, .userNameError {
+            span:nth-child(1) {
+            width: auto;
+            margin-right: 16px;
+            }
+        }
+        }
     }
 }
 </style>

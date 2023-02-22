@@ -20,3 +20,17 @@ a {
 .fw-b {
     font-weight: bold;
 }
+.mobileShow {
+    display: none;
+}
+.mobileNone {
+    display: block;
+}
+@media screen and (max-width: 576px) {
+    .mobileShow {
+        display: block;
+    }
+    .mobileNone {
+        display: none;
+    }
+}

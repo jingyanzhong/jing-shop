@@ -118,7 +118,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .orderList {
     .container {
         max-width: 710px;
@@ -205,7 +205,7 @@ export default {
             border: 1px solid #D0D3C9;
             color: #4A593D;
             font-size: 14px;
-
+            background: #fff;
             thead {
                 font-weight: bold;
 

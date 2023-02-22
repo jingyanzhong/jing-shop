@@ -45,4 +45,15 @@ export default {
         }
     }
 }
+@media screen and (max-width:576px) {
+  .productsMenu {
+    ul {
+      justify-content: start;
+      flex-wrap: wrap;
+      a {
+        margin: 8px 0;
+      }
+    }
+}
+}
 </style>
