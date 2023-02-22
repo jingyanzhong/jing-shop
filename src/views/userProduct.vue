@@ -1,4 +1,5 @@
 <template>
+<LoadingComponent :active="isLoading"></LoadingComponent>
 <div class="product">
     <div class="container">
         <div class="productMain">
@@ -86,7 +87,8 @@ export default {
       addCart: {},
       loading: false,
       color: '',
-      swiper: {}
+      swiper: {},
+      isLoading: false
     }
   },
   components: {
@@ -108,9 +110,11 @@ export default {
       })
     },
     getProduct () {
+      this.isLoading = true
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/product/${this.id}`
       this.$http.get(api).then((res) => {
         this.product = res.data.product
+        this.isLoading = false
         console.log(this.product)
       })
     },

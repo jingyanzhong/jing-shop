@@ -17,6 +17,7 @@
                 </div>
             </div>
             <div class="payForm">
+                <h4>填寫信用卡資料</h4>
                 <VForm v-slot="{ meta }" @submit="paySubmit">
                     <div class="userName">
                         <VField class="lastName" name="name"  label="姓名" type="text" placeholder="姓名" rules="required" />
@@ -156,7 +157,12 @@ export default {
         }
     }
     .payForm {
-        margin-top: 24px;
+        margin-top: 48px;
+        h4 {
+            font-size: 20px;
+            text-align: center;
+            margin-bottom: 24px;
+        }
         div {
             display: flex;
             input {

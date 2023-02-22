@@ -63,10 +63,10 @@ export default {
       this.form.user.email = val.email
       this.form.user.tel = val.tel
       this.form.user.address = val.addressNum + val.address
-      this.form.msg = val.message
+      this.form.message = val.message
       // this.user = val;
       console.log('user', this.form.user)
-      console.log('msg', this.form.msg)
+      console.log('msg', this.form.message)
       // const order = this.form
       // const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/order`
       // this.$http.post(api, { data: order }).then((res) => {

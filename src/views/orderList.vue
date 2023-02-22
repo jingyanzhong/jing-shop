@@ -1,4 +1,5 @@
 <template>
+    <LoadingComponent :active="isLoading"></LoadingComponent>
     <div class="orderList">
         <div class="container">
             <h3>結帳 / <span>確認收件人資料</span></h3>
@@ -90,18 +91,20 @@ export default {
   data () {
     return {
       orderId: '',
-      orderList: ''
+      orderList: '',
+      isLoading: false
     }
   },
   methods: {
     currency,
     getOrder () {
+      this.isLoading = true
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/order/${this.orderId}`
       this.$http.get(api).then((res) => {
         if (res.data.success) {
           this.orderList = res.data.order
         }
-        console.log(this.orderList)
+        this.isLoading = false
       })
     },
     payOrder () {

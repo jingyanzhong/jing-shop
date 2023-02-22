@@ -1,4 +1,5 @@
 <template>
+    <LoadingComponent :active="isLoading"></LoadingComponent>
     <div class="checkOut">
         <div class="container">
             <h3>結帳 / <span>填寫收件人資料</span></h3>
@@ -16,7 +17,7 @@
                     <div class="ball ball04"></div>
                 </div>
             </div>
-            <div class="productList_final">
+            <div class="productList_final mobileNone">
                 <table>
                     <thead>
                         <tr class="title">
@@ -51,6 +52,9 @@
                     </tfoot>
                 </table>
             </div>
+            <productFinalMobile class="mobileShow"
+            :carts-list="carts"
+            ></productFinalMobile>
             <div class="userForm">
                 <VForm v-slot="{ meta, errors }" @submit="formSubmit">
                     <div class="userName">
@@ -98,7 +102,11 @@
 
 <script>
 import { currency } from '@/methods/filters'
+import productFinalMobile from '@/components/productListFinalMobile.vue'
 export default {
+  components: {
+    productFinalMobile
+  },
   data () {
     return {
       carts: {},
@@ -110,15 +118,18 @@ export default {
           address: ''
         },
         message: ''
-      }
+      },
+      isLoading: false
     }
   },
   methods: {
     currency,
     getCarts () {
+      this.isLoading = true
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
       this.$http.get(api).then((res) => {
         this.carts = res.data.data
+        this.isLoading = false
         console.log(this.carts)
       })
     },
@@ -127,10 +138,10 @@ export default {
       this.form.user.email = val.email
       this.form.user.tel = val.tel
       this.form.user.address = val.addressNum + val.address
-      this.form.msg = val.message
+      this.form.message = val.message
       // this.user = val;
       console.log('user', this.form.user)
-      console.log('msg', this.form.msg)
+      console.log('msg', this.form.message)
       const order = this.form
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/order`
       this.$http.post(api, { data: order }).then((res) => {
@@ -150,6 +161,12 @@ export default {
 </script>
 
 <style lang="scss">
+.mobileShow {
+    display: none;
+}
+.mobileNone {
+    display: block;
+}
 .checkOut {
     .container {
         max-width: 710px;
@@ -236,6 +253,7 @@ export default {
         table {
             width: 100%;
             border: 1px solid #D0D3C9;
+            background: #fff;
             color: #4A593D;
             font-size: 14px;
 
@@ -337,6 +355,14 @@ export default {
                 }
             }
         }
+    }
+}
+@media screen and (max-width: 576px) {
+    .mobileShow {
+        display: block;
+    }
+    .mobileNone {
+        display: none;
     }
 }
 </style>

@@ -1,4 +1,5 @@
 <template>
+  <LoadingComponent :active="isLoading"></LoadingComponent>
   <Menu @category-filter="categoryFilter"></Menu>
   <div class="productsList">
     <div class="container">
@@ -36,16 +37,19 @@ export default {
     return {
       products: {},
       pagination: {},
-      category: '全部'
+      category: '全部',
+      isLoading: false
     }
   },
   methods: {
     currency,
     getProducts (page = 1) {
+      this.isLoading = true
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products?page=${page}`
       this.$http.get(api).then((res) => {
         this.products = res.data.products
         this.pagination = res.data.pagination
+        this.isLoading = false
         console.log(this.pagination)
       })
     },

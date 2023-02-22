@@ -7,14 +7,14 @@
           <router-link to="/" class="logo"> 京式會社 </router-link>
           <span>日本服飾、雜貨代購</span>
         </h1>
-        <div class="nav-link">
-          <router-link to="/products">所有商品</router-link>
-          <router-link to="/products">購買須知</router-link>
-          <router-link to="/products">登入</router-link>
-          <router-link to="/cart">購物車</router-link>
+        <div class="nav-link" :class="{ 'active' : isActive }">
+          <router-link to="/products" @click="isActive = false">所有商品</router-link>
+          <router-link to="/products" @click="isActive = false">購買須知</router-link>
+          <router-link to="/products" @click="isActive = false">登入</router-link>
+          <router-link to="/cart" @click="isActive = false">購物車</router-link>
         </div>
         <div class="navList">
-          <a href="#">
+          <a href="#" @click.prevent="mobileNavToggle">
             <i class="bi bi-list"></i>
           </a>
         </div>
@@ -57,9 +57,17 @@ export default {
   components: {
     ToastMessage
   },
+  data () {
+    return {
+      isActive: false
+    }
+  },
   methods: {
     goTop () {
       window.scrollTo({ top: 0, behavior: 'smooth' })
+    },
+    mobileNavToggle () {
+      this.isActive = !this.isActive
     }
   }
 }
@@ -234,8 +242,17 @@ footer {
       top: 100px;
       left: 0;
       right: 0;
-      padding: 16px;
+      padding: 0px;
       background: rgba(255,255,255,.7);
+      height: 0px;
+      overflow: hidden;
+      transition: all .5s;
+      &.active {
+        // display: flex;
+        // flex-direction: column;
+        height: 224px;
+        padding: 16px;
+      }
       a {
         padding: 16px;
         &::before {

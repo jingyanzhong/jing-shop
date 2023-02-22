@@ -1,10 +1,13 @@
 <template>
+<LoadingComponent :active="isLoading"></LoadingComponent>
 <div class="cart">
     <div class="container">
         <h3>購物車</h3>
         <div class="cartContent">
             <div class="cartList">
-                <a href="#" @click.prevent="deleteAllCarts">刪除全部購物車</a>
+                <div class="deleteCarts">
+                    <a href="#" @click.prevent="openDeleteModal">刪除全部購物車</a>
+                </div>
                 <p v-if="carts.total === 0">暫時無購物清單，請至商城選購</p>
                 <ul class="cartItem">
                     <li v-for="item in carts.carts" :key="item.id">
@@ -56,16 +59,22 @@
                     <br>
                     <p>結帳總金額 <span>NTD {{ currency(Math.ceil(carts.final_total)) }}元</span></p>
                 </div>
-                <router-link to="/checkOut" class="cartNextBtn">前往結帳</router-link>
-                <!-- <button type="button" class="cartNextBtn">前往結帳</button> -->
+                <button type="button" class="cartNextBtn disabled" v-if="carts.total === 0">前往結帳</button>
+                <router-link to="/checkOut" class="cartNextBtn" v-else>前往結帳</router-link>
             </div>
         </div>
     </div>
 </div>
+<deleteModal ref="deleteModal"
+@delete-carts="deleteAllCarts"></deleteModal>
 </template>
 <script>
 import { currency } from '@/methods/filters'
+import deleteModal from '@/components/DeleteModal.vue'
 export default {
+  components: {
+    deleteModal
+  },
   data () {
     return {
       carts: {},
@@ -73,9 +82,11 @@ export default {
       coupon: '',
       couponMsg: '',
       final_total: 0,
-      transport: ''
+      transport: '',
+      isLoading: false
     }
   },
+  inject: ['emitter'],
   methods: {
     currency,
     getCarts () {
@@ -86,7 +97,20 @@ export default {
       })
     },
     deleteAllCarts () {
-      console.log('刪除全部')
+      this.isLoading = true
+      const deleteModalComponent = this.$refs.deleteModal
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/carts`
+      this.$http.delete(api).then((res) => {
+        if (res.data.success) {
+          this.emitter.emit('push-message', {
+            style: 'success',
+            title: '已刪除購物車'
+          })
+        }
+        this.isLoading = false
+        deleteModalComponent.hideModal()
+        this.getCarts()
+      })
     },
     deleteCart (item) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.id}`
@@ -95,6 +119,10 @@ export default {
         this.getCarts()
       })
     //   console.log('刪除單一商品')
+    },
+    openDeleteModal () {
+      const deleteModalComponent = this.$refs.deleteModal
+      deleteModalComponent.showModal()
     },
     updateCarts (item) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.id}`
@@ -145,15 +173,19 @@ export default {
     .cartList {
         width: 65%;
         margin-right: 16px;
-        a {
-            font-size: 14px;
+        .deleteCarts {
             text-align: end;
-            color: #4A593D;
-            transition: all .5s;
-            margin-bottom: 16px;
-            &:hover {
-                font-weight: bold;
-                color: #37442c;
+            a {
+                display: inline-block;
+                font-size: 14px;
+                color: #4A593D;
+                transition: all .5s;
+                margin-bottom: 16px;
+                padding: 8px;
+                &:hover {
+                    font-weight: bold;
+                    color: #37442c;
+                }
             }
         }
     }
@@ -165,6 +197,7 @@ export default {
         height: 220px;
         margin-bottom: 16px;
         border: 1px solid #D0D3C9;
+        background: #fff;
         transition: .3s;
         &:hover {
             box-shadow: 0 2px 6px 0 rgba(0,0,0,.35);
@@ -285,6 +318,39 @@ export default {
             transition: all .5s;
             &:hover {
                 background: #37442c;
+            }
+        }
+        .disabled {
+            cursor: not-allowed;
+            background: #555555;
+            &:hover {
+                background: #555555;
+             }
+        }
+    }
+}
+@media screen and (max-width: 576px) {
+    .cartContent {
+        display: block;
+        .cartList {
+            width: 100%;
+            margin-bottom: 24px;
+        }
+        .cartInformation {
+            width: 100%;
+        }
+        .cartItem li {
+            .cartItemImg {
+                width: 45%;
+                padding: 12px;
+                img {
+                    height: 180px;
+                    object-fit: cover;
+                }
+            }
+            .cartItemContent{
+                width: 55%;
+                padding: 12px 12px 12px 0;
             }
         }
     }
