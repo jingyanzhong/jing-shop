@@ -18,7 +18,7 @@
                 <hr>
                 <p class="size"><span>F</span></p>
                 <p class="color">
-                    <a href="#" :class="{ 'active' : color === item }" @click.prevent="color = item" v-for="item in product.description2" :key="item">{{ (item.split(' ', 1)).toString() }}</a>
+                    <a href="#" :class="{ 'active' : color === item }" @click.prevent="color = item" v-for="item in colorArr" :key="item">{{ item }}</a>
                 </p>
                 <p class="num">
                     <select v-model="qty">
@@ -86,7 +86,8 @@ export default {
       product: {},
       addCart: {},
       loading: false,
-      color: '',
+      colorArr: '',
+      color: null,
       swiper: {},
       isLoading: false
     }
@@ -111,9 +112,12 @@ export default {
     },
     getProduct () {
       this.isLoading = true
+      let color = ''
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/product/${this.id}`
       this.$http.get(api).then((res) => {
         this.product = res.data.product
+        color = res.data.product.description2
+        this.colorArr = color.split(' ')
         this.isLoading = false
         console.log(this.product)
       })
@@ -123,17 +127,22 @@ export default {
       this.addCart.qty = parseInt(this.qty, 10)
       this.addCart.color = this.color
       this.loading = true
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
-      this.$http.post(api, { data: this.addCart }).then((res) => {
-        if (res.data.success) {
-          this.emitter.emit('push-message', {
-            style: 'success',
-            title: '已加入購物車'
-          })
-        }
+      if (this.color === null) {
+        alert('尚未選擇顏色，請點選')
         this.loading = false
-        console.log(res)
-      })
+      } else {
+        const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
+        this.$http.post(api, { data: this.addCart }).then((res) => {
+          if (res.data.success) {
+            this.emitter.emit('push-message', {
+              style: 'success',
+              title: '已加入購物車'
+            })
+          }
+          this.loading = false
+          console.log(res)
+        })
+      }
     },
     getOtherProduct (id) {
       this.$router.push(`/products/${id}`)
