@@ -117,6 +117,7 @@ export default {
       this.$http.get(api).then((res) => {
         this.product = res.data.product
         color = res.data.product.description2
+        console.log(color)
         this.colorArr = color.split(' ')
         this.isLoading = false
         console.log(this.product)

@@ -2,11 +2,25 @@
   <div class="swiper bannerSwiper">
     <div class="swiper-wrapper">
         <div class="swiper-slide page1">
-          <img src="../../img/banner01.jpg" alt="開幕優惠活動">
+          <router-link to="/products">
+            <img src="../../img/banner01.png" alt="開幕優惠活動">
+          </router-link>
         </div>
-        <div class="swiper-slide page2">page 2</div>
-        <div class="swiper-slide page3">page 3</div>
-        <div class="swiper-slide page4">page 4</div>
+        <div class="swiper-slide page2">
+          <router-link to="/products">
+            <img src="../../img/banner02.png" alt="京式會社">
+          </router-link>
+        </div>
+        <div class="swiper-slide page3">
+          <router-link to="/products">
+            <img src="../../img/banner01.png" alt="開幕優惠活動">
+          </router-link>
+        </div>
+        <div class="swiper-slide page4">
+          <router-link to="/products">
+            <img src="../../img/banner02.png" alt="京式會社">
+          </router-link>
+        </div>
     </div>
     <div class="swiper-pagination"></div>
   </div>
@@ -56,6 +70,9 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    a {
+      height: 100%;
+    }
     img {
       object-fit: cover;
       height: 100%;
