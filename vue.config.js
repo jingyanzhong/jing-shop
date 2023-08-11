@@ -1,5 +1,5 @@
 module.exports = {
-  publicPath: process.env.NODE_ENV === 'production' ? '/jingShop/' : '/',
+  publicPath: process.env.NODE_ENV === 'production' ? '/dist/' : '/',
   chainWebpack: (config) => {
     config.plugin('html').tap((args) => {
       const [meta] = args

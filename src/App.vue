@@ -9,8 +9,8 @@
         </h1>
         <div class="nav-link" :class="{ 'active' : isActive }">
           <router-link to="/products" @click="isActive = false">所有商品</router-link>
-          <router-link to="/products" @click="isActive = false">購買須知</router-link>
-          <router-link to="/products" @click="isActive = false">登入</router-link>
+          <router-link to="/shoppingGuide" @click="isActive = false">購買須知</router-link>
+          <!-- <router-link to="/products" @click="isActive = false">登入</router-link> -->
           <router-link to="/cart" @click="isActive = false">購物車</router-link>
         </div>
         <div class="navList">
