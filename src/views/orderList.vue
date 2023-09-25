@@ -17,7 +17,7 @@
                     <div class="ball ball04"></div>
                 </div>
             </div>
-            <div class="productList_final">
+            <div class="productList_final mobileNone">
                 <table>
                     <thead>
                         <tr class="title">
@@ -45,7 +45,39 @@
                     <tfoot>
                         <tr>
                             <td colspan="6">
-                                <span class="sale">總價NTD {{ currency(orderList.total) }}</span>
+                                <span class="total">總價NTD {{ currency(orderList.total) }}</span>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="productList_final mobileShow">
+                <table>
+                    <thead>
+                        <tr class="title">
+                            <th colspan="7">訂單明細</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="item in orderList.products" :key="item.id">
+                            <td>
+                                <p>
+                                    <span class="title">{{ item.product.title }}</span>
+                                    <span>F</span>
+                                    <span>{{ item.color }}</span>
+                                    <span>數量 {{ item.qty }}</span>
+                                </p>
+                                <p class="text-right">
+                                    <span>單價 NTD {{ currency(item.total) }}</span>
+                                    <span class="fw-b">小計 NTD {{ currency(item.final_total) }}</span>
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="7">
+                                <span class="total">總價NTD {{ currency(orderList.total) }}</span>
                             </td>
                         </tr>
                     </tfoot>
@@ -138,6 +170,7 @@ export default {
     }
 
     .checkOutLine {
+
         .text,
         .line {
             display: flex;
@@ -145,12 +178,14 @@ export default {
             margin-bottom: 16px;
             font-size: 14px;
         }
+
         .line {
             width: 95%;
             height: 3px;
             margin: 0 auto;
             position: relative;
-            &::before{
+
+            &::before {
                 content: '';
                 position: absolute;
                 top: 0;
@@ -159,13 +194,15 @@ export default {
                 width: 100%;
                 background: #D0D3C9;
             }
-            &::after{
+
+            &::after {
                 content: '';
                 width: 33.33333%;
                 height: 3px;
                 background: #4A593D;
                 z-index: 3;
             }
+
             .ball {
                 width: 12px;
                 height: 12px;
@@ -197,7 +234,8 @@ export default {
         }
     }
 
-    .productList_final, .userFormCheck {
+    .productList_final,
+    .userFormCheck {
         margin-top: 24px;
 
         table {
@@ -206,6 +244,7 @@ export default {
             color: #4A593D;
             font-size: 14px;
             background: #fff;
+
             thead {
                 font-weight: bold;
 
@@ -230,9 +269,11 @@ export default {
                     }
                 }
 
-                .sale {
+                .total {
                     color: #ce0505;
                     margin-left: 16px;
+                    font-weight: bold;
+                    font-size: 16px;
                 }
 
                 .line_through {
@@ -242,10 +283,12 @@ export default {
             }
         }
     }
+
     .payBtn {
         margin-top: 24px;
         display: block;
         text-align: center;
+
         button {
             width: 30%;
             color: #fff;
@@ -254,8 +297,38 @@ export default {
             border: none;
             cursor: pointer;
             transition: all .5s;
+
             &:hover {
                 background: #4A593D;
+            }
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    .text-right {
+        text-align: end;
+    }
+    .productList_final {
+        table {
+
+            tbody {
+                .title {
+                    display: block;
+                    font-weight: bold;
+                }
+            }
+
+            tfoot {
+
+                .total {
+                    font-weight: bold;
+                    font-size: 16px;
+                }
+            }
+
+            span {
+                margin-right: 16px;
             }
         }
     }
