@@ -5,22 +5,26 @@
     class="swiper bannerSwiper">
     <swiper-slide>
       <router-link to="/products">
-        <img src="../../img/banner01.png" alt="開幕優惠活動">
+        <img class="mobileNone" src="../../img/banner01.png" alt="開幕優惠活動">
+        <img class="mobileShow" src="../../img/banner01-m.png" alt="開幕優惠活動">
       </router-link>
     </swiper-slide>
     <swiper-slide>
       <router-link to="/products">
-        <img src="../../img/banner02.png" alt="京式會社">
+        <img class="mobileNone" src="../../img/banner02.png" alt="京式會社">
+        <img class="mobileShow" src="../../img/banner02-m.png" alt="京式會社">
       </router-link>
     </swiper-slide>
     <swiper-slide>
       <router-link to="/products">
-        <img src="../../img/banner01.png" alt="開幕優惠活動">
+        <img class="mobileNone" src="../../img/banner01.png" alt="開幕優惠活動">
+        <img class="mobileShow" src="../../img/banner01-m.png" alt="開幕優惠活動">
       </router-link>
     </swiper-slide>
     <swiper-slide>
       <router-link to="/products">
-        <img src="../../img/banner02.png" alt="京式會社">
+        <img class="mobileNone" src="../../img/banner02.png" alt="京式會社">
+        <img class="mobileShow" src="../../img/banner02-m.png" alt="京式會社">
       </router-link>
     </swiper-slide>
   </swiper>
@@ -66,6 +70,7 @@ export default {
   align-items: center;
 
   a {
+    width: 100%;
     height: 100%;
   }
 
