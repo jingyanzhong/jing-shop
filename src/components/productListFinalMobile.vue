@@ -17,11 +17,7 @@
                         </p>
                         <p class="text-right">
                             <span>單價 NTD {{ currency(item.product.price) }}</span>
-<<<<<<< HEAD
                             <span class="fw-b">小計 NTD {{ currency(item.final_total) }}</span>
-=======
-                            <span class="fw-b total">小計 NTD {{ currency(item.final_total) }}</span>
->>>>>>> gh-pages
                         </p>
                     </td>
                 </tr>
@@ -54,7 +50,6 @@ export default {
 </script>
 
 <style lang="scss">
-<<<<<<< HEAD
 .productList_final {
     margin-top: 24px;
 
@@ -111,75 +106,8 @@ export default {
         }
     }
 }
-=======
->>>>>>> gh-pages
 
 table {
-    width: 100%;
-    border: 1px solid #D0D3C9;
-    color: #4A593D;
-    font-size: 14px;
-    background: #fff;
-
-    thead {
-        font-weight: bold;
-
-        th {
-            padding: 16px;
-        }
-
-        .title {
-            background: #D0D3C9;
-        }
-    }
-
-    tbody {
-        background: #fff;
-        border: 1px solid #D0D3C9;
-
-        tr {
-            border-bottom: 1px solid #D0D3C9;
-        }
-
-        td {
-            padding: 16px 16px 8px 16px;
-        }
-
-        p {
-            padding-bottom: 8px;
-            line-height: 1.5;
-        }
-
-        .title {
-            display: block;
-            font-weight: bold;
-            color: #4a593d;
-            margin-bottom: 8px;
-        }
-
-        .total {
-            margin-right: 0;
-        }
-    }
-
-    tfoot {
-        td {
-            padding: 20px 0;
-            text-align: end;
-        }
-
-        .line_through {
-            color: #9EAA8F;
-            text-decoration: line-through;
-        }
-
-        .sale {
-            color: #ce0505;
-            font-weight: bold;
-            font-size: 18px;
-            margin-left: auto;
-        }
-    }
 
     span {
         margin-right: 16px;

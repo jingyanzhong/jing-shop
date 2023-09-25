@@ -336,7 +336,6 @@ export default {
         }
     }
 }
-<<<<<<< HEAD
 
 @media (max-width: 767px) {
     .text-right {
@@ -365,57 +364,5 @@ export default {
             }
         }
     }
-=======
-@media (max-width: 767px) {
-    table {
-    width: 100%;
-    thead {
-        font-weight: bold;
-        th{
-            padding: 16px 0;
-        }
-    }
-    tbody {
-        background: #fff;
-        border: 1px solid #D0D3C9;
-        tr {
-            border-bottom: 1px solid #D0D3C9;
-        }
-        td {
-            padding: 16px 16px 8px 16px;
-        }
-        p {
-            padding-bottom: 8px;
-        }
-        .title {
-            display: block;
-            font-weight: bold;
-            color: #4a593d;
-            margin-bottom: 8px;
-        }
-        .total {
-            margin-right: 0;
-        }
-    }
-    tfoot {
-        td {
-           padding: 20px 0;
-           text-align: end;
-        }
-        .final_total {
-            color: red;
-            font-weight: bold;
-            font-size: 18px;
-            margin-right: 0;
-        }
-    }
-    span {
-        margin-right: 16px;
-    }
-    .text-right {
-        text-align: end;
-    }
-}
->>>>>>> gh-pages
 }
 </style>
