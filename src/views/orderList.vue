@@ -83,38 +83,6 @@
                     </tfoot>
                 </table>
             </div>
-            <div class="productList_final mobileShow">
-                <table>
-                    <thead>
-                        <tr class="title">
-                            <th colspan="7">訂單明細</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="item in orderList.products" :key="item.id">
-                            <td>
-                                <p>
-                                    <span class="title">{{ item.product.title }}</span>
-                                    <span>F</span>
-                                    <span>{{ item.color }}</span>
-                                    <span>數量 {{ item.qty }}</span>
-                                </p>
-                                <p class="text-right">
-                                    <span>單價 NTD {{ currency(item.total) }}</span>
-                                    <span class="fw-b total">小計 NTD {{ currency(item.final_total) }}</span>
-                                </p>
-                            </td>
-                        </tr>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="7">
-                                <span class="final_total">總價NTD {{ currency(orderList.total) }}</span>
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
             <div class="userFormCheck">
                 <table>
                     <thead>
