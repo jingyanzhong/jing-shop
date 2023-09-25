@@ -1,7 +1,7 @@
 <template>
     <div class="news">
         <div class="container">
-            <div class="info">12/9~13刊登日貨新品。12/13收單唷!</div>
+            <div class="info">12/8~12刊登日貨新品。12/13收單唷!</div>
             <div class="info">賣場所有免運活動皆限本島黑貓宅配＆7-11先付款後取貨</div>
             <div class="info">新朋友請先查看「購買須知」並加入會員唷 ! 若隨意棄單者一率黑名單。</div>
         </div>

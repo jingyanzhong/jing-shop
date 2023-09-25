@@ -270,6 +270,11 @@ export default {
                 span {
                     display: flex;
                     align-items: center;
+                    width: 65%;
+                }
+                input {
+                    margin-left: auto;
+                    width: 65%;
                 }
             }
             p {

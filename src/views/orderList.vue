@@ -17,7 +17,7 @@
                     <div class="ball ball04"></div>
                 </div>
             </div>
-            <div class="productList_final">
+            <div class="productList_final mobileNone">
                 <table>
                     <thead>
                         <tr class="title">
@@ -46,6 +46,38 @@
                         <tr>
                             <td colspan="6">
                                 <span class="sale">總價NTD {{ currency(orderList.total) }}</span>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="productList_final mobileShow">
+                <table>
+                    <thead>
+                        <tr class="title">
+                            <th colspan="7">訂單明細</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="item in orderList.products" :key="item.id">
+                            <td>
+                                <p>
+                                    <span class="title">{{ item.product.title }}</span>
+                                    <span>F</span>
+                                    <span>{{ item.color }}</span>
+                                    <span>數量 {{ item.qty }}</span>
+                                </p>
+                                <p class="text-right">
+                                    <span>單價 NTD {{ currency(item.total) }}</span>
+                                    <span class="fw-b total">小計 NTD {{ currency(item.final_total) }}</span>
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="7">
+                                <span class="final_total">總價NTD {{ currency(orderList.total) }}</span>
                             </td>
                         </tr>
                     </tfoot>
@@ -138,6 +170,7 @@ export default {
     }
 
     .checkOutLine {
+
         .text,
         .line {
             display: flex;
@@ -145,12 +178,14 @@ export default {
             margin-bottom: 16px;
             font-size: 14px;
         }
+
         .line {
             width: 95%;
             height: 3px;
             margin: 0 auto;
             position: relative;
-            &::before{
+
+            &::before {
                 content: '';
                 position: absolute;
                 top: 0;
@@ -159,13 +194,15 @@ export default {
                 width: 100%;
                 background: #D0D3C9;
             }
-            &::after{
+
+            &::after {
                 content: '';
                 width: 33.33333%;
                 height: 3px;
                 background: #4A593D;
                 z-index: 3;
             }
+
             .ball {
                 width: 12px;
                 height: 12px;
@@ -197,7 +234,8 @@ export default {
         }
     }
 
-    .productList_final, .userFormCheck {
+    .productList_final,
+    .userFormCheck {
         margin-top: 24px;
 
         table {
@@ -206,6 +244,7 @@ export default {
             color: #4A593D;
             font-size: 14px;
             background: #fff;
+
             thead {
                 font-weight: bold;
 
@@ -242,10 +281,12 @@ export default {
             }
         }
     }
+
     .payBtn {
         margin-top: 24px;
         display: block;
         text-align: center;
+
         button {
             width: 30%;
             color: #fff;
@@ -254,10 +295,62 @@ export default {
             border: none;
             cursor: pointer;
             transition: all .5s;
+
             &:hover {
                 background: #4A593D;
             }
         }
     }
+}
+@media (max-width: 767px) {
+    table {
+    width: 100%;
+    thead {
+        font-weight: bold;
+        th{
+            padding: 16px 0;
+        }
+    }
+    tbody {
+        background: #fff;
+        border: 1px solid #D0D3C9;
+        tr {
+            border-bottom: 1px solid #D0D3C9;
+        }
+        td {
+            padding: 16px 16px 8px 16px;
+        }
+        p {
+            padding-bottom: 8px;
+        }
+        .title {
+            display: block;
+            font-weight: bold;
+            color: #4a593d;
+            margin-bottom: 8px;
+        }
+        .total {
+            margin-right: 0;
+        }
+    }
+    tfoot {
+        td {
+           padding: 20px 0;
+           text-align: end;
+        }
+        .final_total {
+            color: red;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 0;
+        }
+    }
+    span {
+        margin-right: 16px;
+    }
+    .text-right {
+        text-align: end;
+    }
+}
 }
 </style>
